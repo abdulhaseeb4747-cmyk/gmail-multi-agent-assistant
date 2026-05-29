@@ -64,3 +64,118 @@ graph LR
     UserActionChoice -- "APPROVE: Send As-Is" --> GmailAPI
     UserActionChoice -- "CANCEL: Stop Immediately" --> TrashBin
     UserActionChoice -- "FEEDBACK: Re-draft" --> WriterAgent
+
+## 📂 Repository Structure
+
+```text
+├── agents.py          # Sub-agents & Coordinator definition + HITL wrapper logic
+├── auth.py            # Gmail API OAuth initialization & tool partitioning
+├── main.py            # Application entry point and user conversation loop
+├── prompts.py         # Isolated system prompts for all agents
+└── requirements.txt   # Application dependency configurations
+```
+
+---
+
+## 🛡️ Key Security Features
+
+### Defensive Routing
+
+The `COORDINATOR AGENT` handles routing. The `Reader` and `Search` tools are kept entirely stateless and sandboxed so they cannot accidentally alter data or execute outbound actions.
+
+### Deterministic Validation
+
+Uses strict Python validation (`email-validator`) to verify recipient formats before allowing the LLM to execute actions, reducing hallucination-based risks.
+
+### Zero-Trust Human-In-The-Loop (HITL)
+
+High-risk actions like `send_gmail_message` are intercepted by LangGraph middleware. The system pauses execution, prints the full email to the terminal, and completely drops the workflow to the trash bin unless explicit human approval is given.
+
+---
+
+## 🚀 How to Run It Locally
+
+### Prerequisites
+
+* Python 3.10+
+* A Google Cloud Project with the Gmail API enabled
+
+---
+
+## ⚙️ Installation Steps
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-repository-url>
+cd <your-project-folder>
+```
+
+### 2. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Create a `.env` File
+
+```env
+GEMINI_API_KEY=your_actual_api_key_here
+```
+
+### 4. Add Google OAuth Credentials
+
+Place your Google Cloud Desktop OAuth file in the project root directory and name it exactly:
+
+```text
+credentials.json
+```
+
+### 5. Run the Application
+
+```bash
+python main.py
+```
+
+---
+
+## 🔐 First-Time Authentication Flow
+
+On your first run:
+
+1. A browser window will automatically open.
+2. Sign into your Google account.
+3. Grant Gmail permissions to the application.
+4. A local `token.json` file will be generated automatically for future authenticated sessions.
+
+---
+
+## 🧠 Core Technologies
+
+* LangChain
+* LangGraph
+* Gmail API
+* Google OAuth 2.0
+* Python
+* Gemini API
+
+---
+
+## 📌 Design Philosophy
+
+This project follows a **security-first multi-agent architecture**:
+
+* Stateless read/search agents
+* Strict tool partitioning
+* Deterministic validation layers
+* Human approval for high-risk actions
+* Zero-trust execution flow
+* Explicit orchestration boundaries
+
+The goal is to demonstrate how modern LLM systems can safely interact with sensitive external systems like email infrastructure while maintaining strong operational safeguards.
+
+---
+
+## 📜 License
+
+This project is intended for educational and research purposes.
