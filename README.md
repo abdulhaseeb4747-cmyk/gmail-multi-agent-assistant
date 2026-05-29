@@ -3,7 +3,6 @@
 A powerful multi-agent email orchestration system built using **LangChain** and **LangGraph**. This project automates reading, searching, and drafting emails via the Gmail API, utilizing a security-first architecture with strict human-in-the-loop guardrails.
 
 ---
-
 ## 🏗️ System Architecture & Program Flow
 
 GitHub natively renders the flowchart below showing the exact logical data path, starting from your input to the final zero-trust verification checks:
@@ -20,34 +19,34 @@ graph LR
     classDef invisible fill:none, stroke:none, color:none;
 
     subgraph Context [System Context Layer]
-        SystemContext[System Context<br/><b>Multi-Agent Security Architecture</b>]:::startContext
+        SystemContext["System Context<br/><b>Multi-Agent Security Architecture</b>"]:::startContext
     end
 
     subgraph TerminalCluster [User Interaction Layer]
-        UserTerminal[User Terminal CLI<br/>Send casual email to...]:::startContext
-        UserActionChoice{<br/>User Action<br/>&nbsp;}:::decision
+        UserTerminal["User Terminal CLI<br/>Send casual email to..."]:::startContext
+        UserActionChoice{"User Action"}:::decision
     end
 
     subgraph Orchestration [AI Orchestration Layer]
-        Coordinator[COORDINATOR AGENT<br/>Supervisor/Router]:::orchestration
-        StateCheckpointer[State Checkpointer<br/>InMemorySaver]:::orchestration
-        LangGraph[LangGraph<br/>Checkpointer Config]:::orchestration
+        Coordinator["COORDINATOR AGENT<br/>Supervisor/Router"]:::orchestration
+        StateCheckpointer["State Checkpointer<br/>InMemorySaver"]:::orchestration
+        LangGraph["LangGraph<br/>Checkpointer Config"]:::orchestration
     end
 
     subgraph AgentExecution [Agent Execution Layer]
-        WriterAgent[WRITER AGENT (Stateful)<br/>Drafting drafts with tools]:::agent
-        ReaderAgent[READER AGENT (Stateless)<br/>Summarizing mails]:::agent
-        SearchAgent[SEARCH AGENT (Stateless)<br/>Querying mailbox]:::agent
+        WriterAgent["WRITER AGENT (Stateful)<br/>Drafting drafts with tools"]:::agent
+        ReaderAgent["READER AGENT (Stateless)<br/>Summarizing mails"]:::agent
+        SearchAgent["SEARCH AGENT (Stateless)<br/>Querying mailbox"]:::agent
     end
 
     subgraph DefensiveControls [Defensive Guardrail Layer]
-        Validation[DEFENSIVE INPUT VALIDATION<br/>validate_email()]:::defensive
-        HITLGuardrail[HITL Guardrail<br/>Interceptor Middleware]:::defensive
+        Validation["DEFENSIVE INPUT VALIDATION<br/>validate_email()"]:::defensive
+        HITLGuardrail["HITL Guardrail<br/>Interceptor Middleware"]:::defensive
     end
 
     subgraph OutputCluster [Execution / Egress Layer]
-        GmailAPI[Gmail API<br/>Execute Send]:::output
-        TrashBin[Trash Bin<br/>Terminate Workflow]:::output
+        GmailAPI["Gmail API<br/>Execute Send"]:::output
+        TrashBin["Trash Bin<br/>Terminate Workflow"]:::output
     end
 
     Context -...- TerminalCluster:::invisible
