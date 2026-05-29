@@ -1,0 +1,6 @@
+langchain
+langchain-google-community
+langchain-google-genai
+langgraph
+python-dotenv
+email-validator

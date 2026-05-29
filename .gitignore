@@ -1,0 +1,9 @@
+# Sensitive credentials and keys (Do NOT commit)
+.env
+credentials.json
+token.json
+
+# Python caching and system files
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
